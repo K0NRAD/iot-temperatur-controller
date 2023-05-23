@@ -1,3 +1,12 @@
+/*
+    CW2015 driver
+
+    The CW2015 device driver is for battery monitoring of the
+    ESP32 controller and the powerbank.
+
+    Author: Konrad Hauke
+    Date:   10.10.2020
+*/
 #ifndef CW2015_H
 #define CW2015_H
 
@@ -12,8 +21,8 @@
 
 /*
 00 00 0000
-|| || ||||_ PowerOnReset (POR) 
-|| |_______ QuickStart  
+|| || ||||_ PowerOnReset (POR)
+|| |_______ QuickStart
 ||_________ Sleep
 */
 
@@ -24,14 +33,15 @@
 #define MODE_RESTART (0xF << 0)
 
 #define CONFIG_UPDATE_FLG (0x1 << 1)
-#define ATHD (0x0 << 3) //ATHD = 0%
+#define ATHD (0x0 << 3) // ATHD = 0%
 
 #define SIZE_BATINFO 64
 
 #define CONFIG_INFO_CONTROLLER 1
 #define CONFIG_INFO_POWER_BANK 2
 
-class CW2015 {
+class CW2015
+{
 
 public:
     CW2015() = default;
@@ -64,7 +74,6 @@ private:
     uint8_t update_config_info(uint8_t *cw_bat);
 
     void delay10ms(unsigned int c);
-
 };
 
 #endif
