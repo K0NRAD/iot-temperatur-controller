@@ -5,42 +5,47 @@ PlatformIO will compile them to static libraries and link into executable file.
 The source code of each library should be placed in a an own separate directory
 ("lib/your_library_name/[here are source files]").
 
-For example, see a structure of the following two libraries `Foo` and `Bar`:
 
+|--doc
+|  |- Circuit diagram of the controller box
+|  |- Data sheet of the Power Controller CW2015
+|  |- Data sheet of the temperature/humidity sensor CW2015
+|  |- Circuit diagram of the powerbank
+|  
+|--include
+|  |- credenitals.h -> Includes username and password for WIFI and MQTT broker. (see description below)
+|  |- README
+|  
 |--lib
 |  |
-|  |--Bar
-|  |  |--docs
-|  |  |--examples
-|  |  |--src
-|  |     |- Bar.c
-|  |     |- Bar.h
-|  |  |- library.json (optional, custom build options, etc) https://docs.platformio.org/page/librarymanager/config.html
+|  |--CW2015
+|  |  |- CW2015.cpp -> Gauge device driver
+|  |  |- CW2015.h
 |  |
-|  |--Foo
-|  |  |- Foo.c
-|  |  |- Foo.h
-|  |
-|  |- README --> THIS FILE
+|  |- README
 |
-|- platformio.ini
 |--src
-   |- main.c
+|  |- main.c  -> Firmware main
+|
+|- platformio.ini -> Platformio configuration
+|
+|- docker-compose.yml -> Docker compose file to launch a Node-Red container. 
 
-and a contents of `src/main.c`:
-```
-#include <Foo.h>
-#include <Bar.h>
+## redenitals.h
+The file 'redenitals.h' contains username and password for WIFI and MQTT broker. 
+The file is not managed in GIT, it is to be created locally by each developer.
 
-int main (void)
-{
-  ...
-}
+The file 'redenitals.h' has the following structure:
 
-```
+#ifndef CREDENTIALS_H
+#define CREDENTIALS_H
 
-PlatformIO Library Dependency Finder will find automatically dependent
-libraries scanning project source files.
+// WiFi credentials
+const char *ssid = "SSID";
+const char *password = "PASSWORD";
 
-More information about PlatformIO Library Dependency Finder
-- https://docs.platformio.org/page/librarymanager/ldf.html
+// MQTT Broker settings
+const char *mqtt_user = "MQTTUSER";
+const char *mqtt_password = "PASSWORD";
+
+#endif
